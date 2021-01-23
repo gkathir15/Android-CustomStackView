@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="CustomStackView">
+
+        <attr name="ViewState" format="enum">
+            <enum name="EXPANDED" value="0"/>
+            <enum name="COLLAPSED" value="1"/>
+            <enum name="EXPAND_FIRST" value="2"/>
+        </attr>
+        <attr name="header_layout1" format="reference" />
+        <attr name="content_layout1" format="reference" />
+
+         <attr name="header_layout2" format="reference" />
+        <attr name="content_layout2" format="reference" />
+
+         <attr name="header_layout3" format="reference" />
+        <attr name="content_layout3" format="reference" />
+
+        <attr name="parent_state" format="enum" />
+
+
+
+
+    </declare-styleable>
+
+
+</resources>

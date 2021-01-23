@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:animateLayoutChanges="true"
+    android:animationCache="true">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ViewStub
+            android:id="@+id/header1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:inflatedId="@id/header1"
+            android:layout="@layout/header_lay"
+            tools:showIn="@layout/header_lay" />
+
+        <ViewStub
+            android:id="@+id/body1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/header1"
+            android:inflatedId="@id/body1"
+            android:layout="@layout/body_lay"
+            tools:showIn="@layout/body_lay" />
+
+        <ViewStub
+            android:id="@+id/header2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/body1"
+            android:inflatedId="@id/header2"
+            android:layout="@layout/header_lay"
+            tools:showIn="@layout/header_lay" />
+
+        <ViewStub
+            android:id="@+id/body2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/header2"
+            android:inflatedId="@id/body2"
+            android:layout="@layout/body_lay"
+            tools:showIn="@layout/body_lay" />
+
+        <ViewStub
+            android:id="@+id/header3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/body2"
+            android:inflatedId="@id/header3"
+            android:layout="@layout/header_lay"
+            tools:showIn="@layout/header_lay" />
+
+        <ViewStub
+            android:id="@+id/body3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/header3"
+            android:inflatedId="@id/body3"
+            android:layout="@layout/body_lay"
+            tools:showIn="@layout/body_lay" />
+    </RelativeLayout>
+</ScrollView>
