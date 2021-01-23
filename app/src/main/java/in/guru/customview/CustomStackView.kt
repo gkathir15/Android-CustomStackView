@@ -5,7 +5,9 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewStub
+import android.view.animation.TranslateAnimation
 import android.widget.RelativeLayout
+
 
 /**
  * TODO: document your custom view class.
@@ -86,6 +88,35 @@ class CustomStackView : RelativeLayout {
 
             viewState = ViewState.values()[it!!.getInt(R.styleable.CustomStackView_ViewState, 0)]
 
+            when (viewState) {
+                ViewState.EXPANDED -> {
+                    childStack1?.bodyView?.visibility = VISIBLE
+                    childStack2?.bodyView?.visibility = VISIBLE
+                    childStack3?.bodyView?.visibility = VISIBLE
+
+                    childStack1?.isExpanded = true
+                    childStack2?.isExpanded = true
+                    childStack3?.isExpanded = true
+                }
+                ViewState.COLLAPSED -> {
+                    childStack2?.bodyView?.visibility = GONE
+                    childStack3?.bodyView?.visibility = GONE
+                    childStack1?.bodyView?.visibility = GONE
+
+                    childStack1?.isExpanded = false
+                    childStack2?.isExpanded = false
+                    childStack3?.isExpanded = false
+                }
+                ViewState.EXPAND_FIRST -> {
+                    childStack2?.bodyView?.visibility = GONE
+                    childStack3?.bodyView?.visibility = GONE
+                    childStack1?.bodyView?.visibility = VISIBLE
+
+                    childStack1?.isExpanded = true
+                    childStack2?.isExpanded = false
+                    childStack3?.isExpanded = false
+                }
+            }
         }
     }
 
@@ -125,38 +156,6 @@ class CustomStackView : RelativeLayout {
             changeState3(!childStack3!!.isExpanded)
         }
 
-
-        when (viewState) {
-            ViewState.EXPANDED -> {
-                childStack1?.bodyView?.visibility = VISIBLE
-                childStack2?.bodyView?.visibility = VISIBLE
-                childStack3?.bodyView?.visibility = VISIBLE
-
-                childStack1?.isExpanded = true
-                childStack2?.isExpanded = true
-                childStack3?.isExpanded = true
-            }
-            ViewState.COLLAPSED -> {
-                childStack2?.bodyView?.visibility = GONE
-                childStack3?.bodyView?.visibility = GONE
-                childStack1?.bodyView?.visibility = GONE
-
-                childStack1?.isExpanded = false
-                childStack2?.isExpanded = false
-                childStack3?.isExpanded = false
-            }
-            ViewState.EXPAND_FIRST -> {
-                childStack2?.bodyView?.visibility = GONE
-                childStack3?.bodyView?.visibility = GONE
-                childStack1?.bodyView?.visibility = VISIBLE
-
-                childStack1?.isExpanded = true
-                childStack2?.isExpanded = false
-                childStack3?.isExpanded = false
-            }
-        }
-
-
     }
 
 
@@ -177,7 +176,7 @@ class CustomStackView : RelativeLayout {
         childStack2?.also {
             it.isExpanded = state
             if (!state)
-                it.bodyView?.visibility = GONE
+                it.bodyView?.visibilityWAnimation(GONE)
             else {
                 it.bodyView?.visibility = VISIBLE
                 changeState1(false)
@@ -190,7 +189,7 @@ class CustomStackView : RelativeLayout {
         childStack3?.also {
             it.isExpanded = state
             if (!state)
-                it.bodyView?.visibility = GONE
+                it.bodyView?.visibilityWAnimation(GONE)
             else {
                 it.bodyView?.visibility = VISIBLE
                 changeState1(false)
@@ -198,6 +197,20 @@ class CustomStackView : RelativeLayout {
             }
         }
     }
+}
+
+private fun View?.visibilityWAnimation(vis: Int) {
+this?.visibility = vis
+    val animate = TranslateAnimation(
+        0F,
+        0F,
+        this?.getHeight()?.toFloat()!!,
+        0F
+    )
+    animate.duration = 1000
+    animate.fillAfter = true
+    this.startAnimation(animate)
+
 }
 
 class ChildStack(pHeaderView: ViewStub?, pBodyView: ViewStub?, isExpanded: Boolean) {
