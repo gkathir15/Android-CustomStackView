@@ -8,7 +8,7 @@
 
 <in.guru.customview.CustomStackView
     android:layout_width="match_parent"
-
+    android:id="@+id/stackView"
     app:ViewState="COLLAPSED"
     app:content_layout1="@layout/sample_body"
     app:header_layout1="@layout/sample_header"
