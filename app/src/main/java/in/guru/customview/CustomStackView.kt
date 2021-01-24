@@ -32,7 +32,8 @@ class CustomStackView : RelativeLayout {
 
 
     private var inflater: LayoutInflater? = null
-    private var parentLayout: ScrollView? = null
+    private var parentLayout: View? = null
+    private var scrollRoot:ScrollView?=null
 
     private var viewState = ViewState.COLLAPSED
 
@@ -72,7 +73,7 @@ class CustomStackView : RelativeLayout {
                     R.styleable.CustomStackView_header_layout1,
                     R.layout.header_lay
                 )
-            )?.setOnClickListener {clickListener1 }
+            )?.setOnClickListener(clickListener1)
             childStack1?.attachBodyLayout(
                 it!!.getResourceId(
                     R.styleable.CustomStackView_content_layout1,
@@ -85,9 +86,9 @@ class CustomStackView : RelativeLayout {
                     R.styleable.CustomStackView_header_layout2,
                     R.layout.header_lay
                 )
-            )?.setOnClickListener {
+            )?.setOnClickListener (
                 clickListener2
-            }
+            )
             childStack2?.attachBodyLayout(
                 it!!.getResourceId(
                     R.styleable.CustomStackView_content_layout2,
@@ -100,9 +101,9 @@ class CustomStackView : RelativeLayout {
                     R.styleable.CustomStackView_header_layout3,
                     R.layout.header_lay
                 )
-            )?.setOnClickListener {
+            )?.setOnClickListener (
                 clickListener3
-            }
+            )
 
             childStack3?.attachBodyLayout(
                 it!!.getResourceId(
@@ -153,7 +154,8 @@ class CustomStackView : RelativeLayout {
 
 
         inflater = LayoutInflater.from(context)
-        parentLayout = inflater?.inflate(R.layout.custom_parent_lay, this) as ScrollView?
+        parentLayout = inflater?.inflate(R.layout.custom_parent_lay, this)
+       scrollRoot= parentLayout?.findViewById<ScrollView>(R.id.root)
 
         childStack1 = ChildStack(
             parentLayout?.findViewById(R.id.header1),
@@ -175,10 +177,10 @@ class CustomStackView : RelativeLayout {
         clickListener1 = OnClickListener {
             changeState1(!childStack1!!.isExpanded)
         }
-        clickListener1 = OnClickListener {
+        clickListener2 = OnClickListener {
             changeState2(!childStack2!!.isExpanded)
         }
-        clickListener1 = OnClickListener {
+        clickListener3 = OnClickListener {
             changeState3(!childStack3!!.isExpanded)
         }
 
@@ -272,12 +274,46 @@ class CustomStackView : RelativeLayout {
 
     }
 
+
+    /**
+     * To Get layout the attached layout at runtime, this will return the layout attached to the Stub,
+     * So findViewById on the views of layouts can be done.
+     * @param isHeader to Check if the view is a header, in case it is, sets corresponding listener to it.
+     * @param index index ranging from 1,2,3 to identify the stack.
+     * @return attached layout the viewStub
+     */
+    fun getView(isHeader:Boolean,index:Int):View?
+    {
+        when(index)
+        {
+            1->{
+                return if(isHeader)
+                    childStack1?.attachedHeaderView
+                else
+                    childStack1?.attachedBodyView
+            }
+            2->{
+                return if(isHeader)
+                    childStack2?.attachedHeaderView
+                else
+                    childStack2?.attachedBodyView
+            }
+            3->{
+                return if(isHeader)
+                    childStack3?.attachedHeaderView
+                else
+                    childStack3?.attachedBodyView
+            }
+        }
+        return null
+    }
+
     /**
      * Scrolls to top of the view when expanded.
      */
     fun moveToTop()
     {
-        parentLayout?.scrollTo(0,0)
+        scrollRoot?.scrollTo(0,0)
     }
 }
 

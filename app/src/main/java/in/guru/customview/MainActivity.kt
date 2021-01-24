@@ -14,5 +14,17 @@ class MainActivity : AppCompatActivity() {
 
 
 
+//        stackView?.also { // methods exposed by the custom View
+//            it.moveToTop()
+//            it.changeState1(true)
+//            it.changeState1(true)
+//            it.changeState1(true)
+//            it.setLayoutStack(R.layout.header_lay,true,1)
+//            it.getView(true,2)
+//
+//        }
+
+
+
     }
 }
